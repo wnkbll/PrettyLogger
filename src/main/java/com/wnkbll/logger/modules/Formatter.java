@@ -24,10 +24,9 @@ public class Formatter {
         );
     }
 
-    private static String getFormatedTime() {
-        String timePattern = "YYYY-MM-dd HH:mm:ss.SSS";
+    public static String getFormatedTime(String pattern) {
         OutputFormat format = new OutputFormat(0, 32, 49);
-        String time = getTimeFromPattern(timePattern);
+        String time = getTimeFromPattern(pattern);
 
         return colorize(time, format);
     }
@@ -60,7 +59,7 @@ public class Formatter {
 
         return  String.format(
                 outputPattern,
-                getFormatedTime(), getFormatedLevel(level),
+                getFormatedTime("YYYY-MM-dd HH:mm:ss.SSS"), getFormatedLevel(level),
                 getFormatedTrace(), getFormatedMessage(message, level)
         );
     }

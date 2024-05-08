@@ -1,31 +1,42 @@
 package com.wnkbll.logger;
 
-import com.wnkbll.logger.modules.Printer;
+import com.wnkbll.logger.modules.Adapter;
 
 public final class Logger {
-    private static final Printer printer = new Printer();
+    private static final Adapter adapter = new Adapter();
+
+    public static int DEBUG = 1;
+    public static int INFO = 2;
+    public static int SUCCESS = 3;
+    public static int WARNING = 4;
+    public static int ERROR = 5;
+    public static int CRITICAL = 6;
+
+    public static void setMinLevel(int value) {
+        adapter.setMinLevel(value);
+    }
 
     public static void debug(String message) {
-        printer.debug(message);
+        adapter.debug(message);
     }
 
     public static void info(String message) {
-        printer.info(message);
+        adapter.info(message);
     }
 
     public static void success(String message) {
-        printer.success(message);
+        adapter.success(message);
     }
 
     public static void warning(String message) {
-        printer.warning(message);
+        adapter.warning(message);
     }
 
     public static void error(String message) {
-        printer.error(message);
+        adapter.error(message);
     }
 
     public static void critical(String message) {
-        printer.critical(message);
+        adapter.critical(message);
     }
 }

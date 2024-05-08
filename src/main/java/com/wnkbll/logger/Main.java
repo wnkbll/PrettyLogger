@@ -2,6 +2,8 @@ package com.wnkbll.logger;
 
 public class Main {
     public static void main(String[] args) {
+        Logger.setMinLevel(Logger.SUCCESS);
+
         Logger.debug("Some text");
         Logger.info("Some text");
         Logger.success("Some text");
