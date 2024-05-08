@@ -1,9 +1,9 @@
 package com.wnkbll.logger;
 
-import com.wnkbll.logger.modules.LogPrinter;
+import com.wnkbll.logger.modules.Printer;
 
 public final class Logger {
-    private static final LogPrinter printer = new LogPrinter();
+    private static final Printer printer = new Printer();
 
     public static void debug(String message) {
         printer.debug(message);

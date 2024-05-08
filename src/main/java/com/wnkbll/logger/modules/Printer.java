@@ -2,9 +2,9 @@ package com.wnkbll.logger.modules;
 
 import com.wnkbll.logger.dataclasses.Level;
 
-public class LogPrinter {
+public class Printer {
     private void log(String message, Level level) {
-        String output = LogFormatter.getFormatedOutput(message, level);
+        String output = Formatter.getFormatedOutput(message, level);
         System.out.println(output);
     }
 

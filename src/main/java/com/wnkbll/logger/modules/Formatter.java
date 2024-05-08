@@ -6,7 +6,7 @@ import com.wnkbll.logger.dataclasses.OutputFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class LogFormatter {
+public class Formatter {
     private static String getTimeFromPattern(String pattern) {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern(pattern);
