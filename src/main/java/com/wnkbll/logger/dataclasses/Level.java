@@ -1,19 +1,13 @@
 package com.wnkbll.logger.dataclasses;
 
-import java.util.HashMap;
-
 public class Level {
     public String name;
-    public Format format = new Format();
+    public OutputFormat format = new OutputFormat();
 
-    public Level(String name, String style, String foreground, String background) {
+    public Level(String name, int style, int foreground, int background) {
         this.name = name;
-
-        HashMap<String, Integer> styles = Globals.getStyles();
-        HashMap<String, Integer> colors = Globals.getColors();
-
-        if (style != null) this.format.style = styles.get(style);
-        if (foreground != null) this.format.foreground = colors.get(foreground);
-        if (background != null) this.format.background = colors.get(background) + 10;
+        this.format.style = style;
+        this.format.foreground = foreground;
+        this.format.background = background;
     }
 }

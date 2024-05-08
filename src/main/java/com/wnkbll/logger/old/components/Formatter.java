@@ -1,6 +1,6 @@
-package com.wnkbll.logger.components;
+package com.wnkbll.logger.old.components;
 
-import com.wnkbll.logger.dataclasses.Format;
+import com.wnkbll.logger.old.dataclasses.Format;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

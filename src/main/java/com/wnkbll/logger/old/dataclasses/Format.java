@@ -1,4 +1,4 @@
-package com.wnkbll.logger.dataclasses;
+package com.wnkbll.logger.old.dataclasses;
 
 public class Format {
     public int style = 0;

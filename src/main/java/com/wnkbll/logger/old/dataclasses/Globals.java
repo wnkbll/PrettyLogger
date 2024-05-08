@@ -1,4 +1,4 @@
-package com.wnkbll.logger.dataclasses;
+package com.wnkbll.logger.old.dataclasses;
 
 import java.util.HashMap;
 

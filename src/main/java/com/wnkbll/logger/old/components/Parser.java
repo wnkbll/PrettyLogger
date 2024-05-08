@@ -1,6 +1,6 @@
-package com.wnkbll.logger.components;
+package com.wnkbll.logger.old.components;
 
-import com.wnkbll.logger.dataclasses.Pair;
+import com.wnkbll.logger.old.dataclasses.Pair;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

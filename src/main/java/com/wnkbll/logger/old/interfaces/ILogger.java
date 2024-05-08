@@ -1,4 +1,4 @@
-package com.wnkbll.logger.interfaces;
+package com.wnkbll.logger.old.interfaces;
 
 public interface ILogger {
     void trace(String message);
