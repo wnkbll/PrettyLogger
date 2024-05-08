@@ -11,6 +11,7 @@ public final class Logger {
     public static int WARNING = 4;
     public static int ERROR = 5;
     public static int CRITICAL = 6;
+    public static int NULL = 7;
 
     public static void setMinLevel(int value) {
         adapter.setMinLevel(value);

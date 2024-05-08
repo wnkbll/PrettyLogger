@@ -7,14 +7,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Formatter {
-    private static String getTimeFromPattern(String pattern) {
+    public static String getTimeFromPattern(String pattern) {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern(pattern);
 
         return currentTime.format(format);
     }
 
-    private static String colorize(String text, OutputFormat format) {
+    public static String colorize(String text, OutputFormat format) {
         return String.format(
                 "\033[%s;%s;%sm%s\033[0m",
                 format.style,
@@ -31,11 +31,24 @@ public class Formatter {
         return colorize(time, format);
     }
 
-    private static String getFormatedLevel(Level level) {
+    public static String getFormatedLevel(Level level) {
         return colorize(level.name + " ".repeat(8-level.name.length()), level.format);
     }
 
-    private static String getFormatedTrace() {
+    public static String getTrace() {
+        String tracePattern = "%s:%s:%s";
+        int length = Thread.currentThread().getStackTrace().length - 1;
+        String className = Thread.currentThread().getStackTrace()[length].getClassName();
+        String methodName = Thread.currentThread().getStackTrace()[length].getMethodName();
+        String lineNumber = String.valueOf(Thread.currentThread().getStackTrace()[length].getLineNumber());
+
+        return String.format(
+                tracePattern,
+                className, methodName, lineNumber
+        );
+    }
+
+    public static String getColorizedTrace() {
         String tracePattern = "%s:%s:%s";
         OutputFormat format = new OutputFormat(0, 36, 49);
 
@@ -50,7 +63,7 @@ public class Formatter {
         );
     }
 
-    private static String getFormatedMessage(String message, Level level) {
+    public static String getFormatedMessage(String message, Level level) {
         return colorize(message, level.format);
     }
 
@@ -60,7 +73,7 @@ public class Formatter {
         return  String.format(
                 outputPattern,
                 getFormatedTime("YYYY-MM-dd HH:mm:ss.SSS"), getFormatedLevel(level),
-                getFormatedTrace(), getFormatedMessage(message, level)
+                getColorizedTrace(), getFormatedMessage(message, level)
         );
     }
 }

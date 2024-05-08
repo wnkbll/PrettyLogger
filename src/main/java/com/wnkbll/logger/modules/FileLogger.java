@@ -56,7 +56,7 @@ public class FileLogger {
         return filePath;
     }
 
-    public synchronized void write(String message) {
+    private synchronized void write(String message) {
         try {
             createDirectory();
         } catch (IOException ignored) {
@@ -75,7 +75,13 @@ public class FileLogger {
         }
     }
 
-    public synchronized void log(String message, Level level) {
+    public void log(String message, Level level) {
+        String output = String.format(
+                "%s | %s | %s - %s",
+                Formatter.getTimeFromPattern("YYYY-MM-dd HH:mm:ss.SSS"), level.name,
+                Formatter.getTrace(), message
+        );
 
+        write(output);
     }
 }
