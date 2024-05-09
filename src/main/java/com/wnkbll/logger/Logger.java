@@ -1,6 +1,7 @@
 package com.wnkbll.logger;
 
 import com.wnkbll.logger.modules.Adapter;
+import com.wnkbll.logger.modules.FileLogger;
 
 public final class Logger {
     private static final Adapter adapter = new Adapter();
@@ -15,6 +16,10 @@ public final class Logger {
 
     public static void setMinLevel(int value) {
         adapter.setMinLevel(value);
+    }
+
+    public static void setFileLogger(FileLogger logger) {
+        adapter.setFileLogger(logger);
     }
 
     public static void debug(String message) {

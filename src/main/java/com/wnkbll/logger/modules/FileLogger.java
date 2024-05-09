@@ -30,7 +30,7 @@ public class FileLogger {
     public void setRotationThreshold(Integer value) {
         if (value > 0) {
             rotationThreshold = value;
-            currentFileName = fileName + "." + Formatter.getFormatedTime("YYYY-MM-dd_HH-mm-ss") + extension;
+            currentFileName = fileName + "." + Formatter.getTimeFromPattern("YYYY-MM-dd_HH-mm-ss");
             return;
         }
 
@@ -43,13 +43,13 @@ public class FileLogger {
     }
 
     private synchronized Path createFile() throws IOException {
-        Path filePath = Paths.get(directoryName + fileName + extension);
+        Path filePath = Paths.get(directoryName + currentFileName + extension);
 
         if (Files.notExists(filePath)) return Files.createFile(filePath);
 
         if (rotationThreshold != 0 && Files.size(filePath) > rotationThreshold) {
-            currentFileName = fileName + "." + Formatter.getFormatedTime("YYYY-MM-dd_HH-mm-ss")  + extension;
-            filePath = Paths.get(directoryName + currentFileName);
+            currentFileName = fileName + "." + Formatter.getTimeFromPattern("YYYY-MM-dd_HH-mm-ss");
+            filePath = Paths.get(directoryName + currentFileName + extension);
             return Files.createFile(filePath);
         }
 
