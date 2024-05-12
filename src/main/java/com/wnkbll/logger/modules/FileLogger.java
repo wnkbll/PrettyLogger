@@ -1,6 +1,7 @@
 package com.wnkbll.logger.modules;
 
 import com.wnkbll.logger.dataclasses.Level;
+import com.wnkbll.logger.interfaces.Logger;
 
 import java.util.List;
 import java.nio.file.Path;
@@ -8,7 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.io.IOException;
 
-public class FileLogger {
+public class FileLogger implements Logger {
     private String directoryName = "logs/";
     private String fileName = "file";
     private String currentFileName = fileName;
