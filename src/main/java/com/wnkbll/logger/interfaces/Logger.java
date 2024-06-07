@@ -1,7 +1,7 @@
 package com.wnkbll.logger.interfaces;
 
-import com.wnkbll.logger.dataclasses.Level;
+import com.wnkbll.logger.dataclasses.Text;
 
 public interface Logger {
-    void log(String message, Level level);
+    void log(Text time, Text level, Text trace, Text message);
 }

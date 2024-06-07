@@ -1,6 +1,6 @@
 package com.wnkbll.logger.modules;
 
-import com.wnkbll.logger.dataclasses.Level;
+import com.wnkbll.logger.dataclasses.Text;
 import com.wnkbll.logger.interfaces.Logger;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public class FileLogger implements Logger {
     public void setRotationThreshold(Integer value) {
         if (value > 0) {
             rotationThreshold = value;
-            currentFileName = fileName + "." + Formatter.getTimeFromPattern("YYYY-MM-dd_HH-mm-ss");
+            currentFileName = fileName + "." + Formatter.getTime("YYYY-MM-dd_HH-mm-ss");
             return;
         }
 
@@ -49,7 +49,7 @@ public class FileLogger implements Logger {
         if (Files.notExists(filePath)) return Files.createFile(filePath);
 
         if (rotationThreshold != 0 && Files.size(filePath) > rotationThreshold) {
-            currentFileName = fileName + "." + Formatter.getTimeFromPattern("YYYY-MM-dd_HH-mm-ss");
+            currentFileName = fileName + "." + Formatter.getTime("YYYY-MM-dd_HH-mm-ss");
             filePath = Paths.get(directoryName + currentFileName + extension);
             return Files.createFile(filePath);
         }
@@ -76,12 +76,8 @@ public class FileLogger implements Logger {
         }
     }
 
-    public void log(String message, Level level) {
-        String output = String.format(
-                "%s | %s | %s - %s",
-                Formatter.getTimeFromPattern("YYYY-MM-dd HH:mm:ss.SSS"), level.name,
-                Formatter.getTrace(), message
-        );
+    public void log(Text time, Text level, Text trace, Text message) {
+        String output = Formatter.getFormatedOutput(time, level, trace, message);
 
         write(output);
     }

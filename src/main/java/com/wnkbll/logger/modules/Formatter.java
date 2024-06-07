@@ -1,79 +1,69 @@
 package com.wnkbll.logger.modules;
 
-import com.wnkbll.logger.dataclasses.Level;
+import com.wnkbll.logger.dataclasses.Text;
 import com.wnkbll.logger.dataclasses.OutputFormat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Formatter {
-    public static String getTimeFromPattern(String pattern) {
+    public static Text equalizeLevelName(Text level) {
+        return new Text(level.text + " ".repeat(8 - level.text.length()), level.format);
+    }
+
+    public static Text getTime(String pattern) {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern(pattern);
 
-        return currentTime.format(format);
+        OutputFormat outputFormat = new OutputFormat(0, 36, 49);
+
+        return new Text(currentTime.format(format), outputFormat);
     }
 
-    public static String colorize(String text, OutputFormat format) {
-        return String.format(
-                "\033[%s;%s;%sm%s\033[0m",
-                format.style,
-                format.foreground,
-                format.background,
-                text
-        );
-    }
-
-    public static String getFormatedTime(String pattern) {
-        OutputFormat format = new OutputFormat(0, 32, 49);
-        String time = getTimeFromPattern(pattern);
-
-        return colorize(time, format);
-    }
-
-    public static String getFormatedLevel(Level level) {
-        return colorize(level.name + " ".repeat(8-level.name.length()), level.format);
-    }
-
-    public static String getTrace() {
-        String tracePattern = "%s:%s:%s";
+    public static Text getTrace(String pattern) {
         int length = Thread.currentThread().getStackTrace().length - 1;
+
         String className = Thread.currentThread().getStackTrace()[length].getClassName();
         String methodName = Thread.currentThread().getStackTrace()[length].getMethodName();
         String lineNumber = String.valueOf(Thread.currentThread().getStackTrace()[length].getLineNumber());
 
-        return String.format(
-                tracePattern,
+        String trace = String.format(
+                pattern,
                 className, methodName, lineNumber
+        );
+
+        OutputFormat outputFormat = new OutputFormat(0, 32, 49);
+
+        return new Text(trace, outputFormat);
+    }
+
+    public static String colorize(Text text) {
+        return String.format(
+                "\033[%s;%s;%sm%s\033[0m",
+                text.format.style,
+                text.format.foreground,
+                text.format.background,
+                text
         );
     }
 
-    public static String getColorizedTrace() {
-        String tracePattern = "%s:%s:%s";
-        OutputFormat format = new OutputFormat(0, 36, 49);
-
-        int length = Thread.currentThread().getStackTrace().length - 1;
-        String className = colorize(Thread.currentThread().getStackTrace()[length].getClassName(), format);
-        String methodName = colorize(Thread.currentThread().getStackTrace()[length].getMethodName(), format);
-        String lineNumber = colorize(String.valueOf(Thread.currentThread().getStackTrace()[length].getLineNumber()), format);
-
-        return String.format(
-                tracePattern,
-                className, methodName, lineNumber
-        );
-    }
-
-    public static String getFormatedMessage(String message, Level level) {
-        return colorize(message, level.format);
-    }
-
-    public static String getFormatedOutput(String message, Level level) {
+    public static String getFormatedOutput(Text time, Text level, Text trace, Text message) {
         String outputPattern = "%s | %s | %s - %s";
 
         return  String.format(
                 outputPattern,
-                getFormatedTime("YYYY-MM-dd HH:mm:ss.SSS"), getFormatedLevel(level),
-                getColorizedTrace(), getFormatedMessage(message, level)
+                time, equalizeLevelName(level),
+                trace, message
+        );
+    }
+
+    public static String getColorizedOutput(Text time, Text level, Text trace, Text message) {
+        String outputPattern = "%s | %s | %s - %s";
+
+        return  String.format(
+                outputPattern,
+                colorize(time), colorize(equalizeLevelName(level)),
+                colorize(trace), colorize(message)
         );
     }
 }

@@ -1,6 +1,9 @@
 package com.wnkbll.logger.modules;
 
-import com.wnkbll.logger.dataclasses.Level;
+import com.wnkbll.logger.dataclasses.Text;
+import com.wnkbll.logger.dataclasses.OutputFormat;
+
+import java.util.HashMap;
 
 public class Adapter {
     private FileLogger fileLogger = new FileLogger();
@@ -15,6 +18,17 @@ public class Adapter {
 
     private static int MIN_LEVEL = DEBUG;
 
+    private static final HashMap<String, Integer> LEVELS = new HashMap<>();
+
+    public Adapter() {
+        LEVELS.put("DEBUG", DEBUG);
+        LEVELS.put("INFO", INFO);
+        LEVELS.put("SUCCESS", SUCCESS);
+        LEVELS.put("WARNING", WARNING);
+        LEVELS.put("ERROR", ERROR);
+        LEVELS.put("CRITICAL", CRITICAL);
+    }
+
     public void setMinLevel(Integer value) {
         MIN_LEVEL = value;
     }
@@ -23,51 +37,67 @@ public class Adapter {
         fileLogger = logger;
     }
 
-    public void debug(String message) {
-        Level level = new Level("DEBUG", 0, 34, 49);
-        consoleLogger.log(message, level);
+    private void log(Text message, Text level) {
+        Text time = Formatter.getTime("YYYY-MM-dd HH:mm:ss.SSS");
+        Text trace = Formatter.getTrace("%s:%s:%s");
 
-        if (MIN_LEVEL <= DEBUG)
-            fileLogger.log(message, level);
+        consoleLogger.log(time, level, trace, message);
+
+         if (MIN_LEVEL <= LEVELS.get(level.text))
+            fileLogger.log(time, level, trace, message);
+    }
+
+    public void debug(String message) {
+        OutputFormat format = new OutputFormat(0, 34, 49);
+
+        Text level = new Text("DEBUG", format);
+        Text logMessage = new Text(message, format);
+
+        log(logMessage, level);
     }
 
     public void info(String message) {
-        Level level = new Level("INFO", 0, 39, 49);
-        consoleLogger.log(message, level);
+        OutputFormat format = new OutputFormat(0, 39, 49);
 
-        if (MIN_LEVEL <= INFO)
-            fileLogger.log(message, level);
+        Text level = new Text("INFO", format);
+        Text logMessage = new Text(message, format);
+
+        log(logMessage, level);
     }
 
     public void success(String message) {
-        Level level = new Level("SUCCESS", 0, 32, 49);
-        consoleLogger.log(message, level);
+        OutputFormat format = new OutputFormat(0, 32, 49);
 
-        if (MIN_LEVEL <= SUCCESS)
-            fileLogger.log(message, level);
+        Text level = new Text("SUCCESS", format);
+        Text logMessage = new Text(message, format);
+
+        log(logMessage, level);
     }
 
     public void warning(String message) {
-        Level level = new Level("WARNING", 0, 33, 49);
-        consoleLogger.log(message, level);
+        OutputFormat format = new OutputFormat(0, 33, 49);
 
-        if (MIN_LEVEL <= WARNING)
-            fileLogger.log(message, level);
+        Text level = new Text("WARNING", format);
+        Text logMessage = new Text(message, format);
+
+        log(logMessage, level);
     }
 
     public void error(String message) {
-        Level level = new Level("ERROR", 0, 31, 49);
-        consoleLogger.log(message, level);
+        OutputFormat format = new OutputFormat(0, 31, 49);
 
-        if (MIN_LEVEL <= ERROR)
-            fileLogger.log(message, level);
+        Text level = new Text("ERROR", format);
+        Text logMessage = new Text(message, format);
+
+        log(logMessage, level);
     }
 
     public void critical(String message) {
-        Level level = new Level("CRITICAL", 1, 31, 49);
-        consoleLogger.log(message, level);
+        OutputFormat format = new OutputFormat(1, 31, 49);
 
-        if (MIN_LEVEL <= CRITICAL)
-            fileLogger.log(message, level);
+        Text level = new Text("CRITICAL", format);
+        Text logMessage = new Text(message, format);
+
+        log(logMessage, level);
     }
 }

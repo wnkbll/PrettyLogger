@@ -44,3 +44,6 @@ bin/
 ### Logs ###
 /logs/
 *.log
+
+### Entry Point (Main.java) ###
+Main.java
