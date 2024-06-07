@@ -23,9 +23,10 @@ public class Formatter {
     public static Text getTrace(String pattern) {
         int length = Thread.currentThread().getStackTrace().length - 1;
 
-        String className = Thread.currentThread().getStackTrace()[length].getClassName();
-        String methodName = Thread.currentThread().getStackTrace()[length].getMethodName();
-        String lineNumber = String.valueOf(Thread.currentThread().getStackTrace()[length].getLineNumber());
+        StackTraceElement currentStackTrace = Thread.currentThread().getStackTrace()[length];
+        String className = currentStackTrace.getClassName();
+        String methodName = currentStackTrace.getMethodName();
+        String lineNumber = String.valueOf(currentStackTrace.getLineNumber());
 
         String trace = String.format(
                 pattern,
