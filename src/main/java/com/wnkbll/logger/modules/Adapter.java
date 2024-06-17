@@ -1,7 +1,7 @@
 package com.wnkbll.logger.modules;
 
-import com.wnkbll.logger.dataclasses.Text;
-import com.wnkbll.logger.dataclasses.OutputFormat;
+import com.wnkbll.logger.types.Text;
+import com.wnkbll.logger.types.OutputFormat;
 
 import java.util.HashMap;
 

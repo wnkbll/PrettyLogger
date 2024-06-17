@@ -1,4 +1,4 @@
-package com.wnkbll.logger.dataclasses;
+package com.wnkbll.logger.types;
 
 public class Text {
     public String text;
